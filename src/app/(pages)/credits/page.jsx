@@ -1,4 +1,3 @@
-import SparkleText from "@/helper/SparkleText";
 
 export default function Page() {
   return (
