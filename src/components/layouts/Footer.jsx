@@ -17,13 +17,13 @@ export default function Footer() {
           <a href="#" className="icon-box w-20 h-20 clr-p"><Ilogo /></a>
         </div>
 
-        <div className="flex-center flex-col gap-4 p-2 w-full h-full">
+        {/* <div className="flex-center flex-col gap-4 p-2 w-full h-full">
           <p className="mx-4 text-2xl self-start">Subscribe to our newsletter</p>
           <label htmlFor="footerEmail">
             <input type="text" className="mb-3 py-2 px-3 w-full bg-transparent outline-2 outline outline-neutral-400 set-text-balance" placeholder="Email Address" />
             <button className="btn-outline w-full">Subscribe</button>
           </label>
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-4 flex-center p-2 w-full h-full">

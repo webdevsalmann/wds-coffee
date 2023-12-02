@@ -3,9 +3,7 @@ import Image from "next/image";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 
 export default function ItemCard({ item, toggle }) {
-    const { addOrderItem, removeOrderItem } = useData();
-    // const existingItem = orderItems.some(orderItem => orderItem.id === item.id);
-
+    const { orders, addOrderItem, removeOrderItem } = useData();
     const getCategoryNumber = (item) => {
         const categoryMapping = {
             c: 1,
@@ -43,9 +41,19 @@ export default function ItemCard({ item, toggle }) {
                         onClick={() => addOrderItem(item.id)}
                     > <FaPlus /> </button>
                 </div>
-
             </div>
 
+            {
+                orders.map((order, i) => {
+                    if (order.itemId == item.id) {
+                        return (
+                            <div key={order.itemId + i + "orderItem"} className="absolute top-0 right-0 m-4 w-7 h-7 set-bg-p text-dark font-bold flex-center rounded-full aspect-square">
+                                {order.quantity}
+                            </div>
+                        )
+                    }
+                })
+            }
         </div>
     )
 }

@@ -7,81 +7,79 @@ const DataContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export function DataProvider({ children }) {
+    const [orders, setOrders] = useState([])
     const menu = datas;
     const menuCategories = Object.keys(menu);
     const [items, setItems] = useState(menu.appetizers);
     const [activeCat, setActiveCat] = useState("appetizers")
-    const [orders, setOrders] = useState([])
 
-    // useEffect(() => {
-    //     console.log(orders)
-    // }, [orders]);
-
-
-    // Function to find item details by ID
-    const findItemById = (id) => {
+    // FIND MENU ITEM BY ID
+    const getItemById = (id) => {
         for (const category in menu) {
-            const item = datas[category].find((item) => item.id === id);
-            if (item) {
-                return item;
+            const menuItem = menu[category].find((item) => item.id === id);
+            if (menuItem) {
+                return menuItem;
             }
         }
-        return null; // Item not found
+        return null;
     };
 
-    // Function to add an order item
+
+    // ADD ORDER ITEM
     const addOrderItem = (id) => {
-        const itemDetails = findItemById(id);
+        const menuItem = getItemById(id);
 
-        if (!itemDetails) {
-            console.log("Item not found");
-            return;
-        }
-
-        const existingOrderIndex = orders.findIndex((order) => order.id === id);
-        
-        if (existingOrderIndex !== -1) {
-            setOrders((prevOrders) => {
-                const updatedOrders = [...prevOrders];
-                updatedOrders[existingOrderIndex].quantity += 1;
-                return updatedOrders;
-            });
-        } else {
-            setOrders((prevOrders) => [
-                ...prevOrders,
-                {
-                    orderId: `order${prevOrders.length + 1}`,
-                    id: id,
+        if (menuItem) {
+            // If order contains that item id in each object's itemId
+            const existingItem = orders.find((item) => item.itemId.includes(id));
+            if (existingItem) {
+                // If order contains that item id in each object's itemId
+                const newOrder = orders.map((item) => {
+                    if (item.itemId.includes(id)) {
+                        return {
+                            ...item,
+                            quantity: item.quantity + 1,
+                        }
+                    } else {
+                        return item;
+                    }
+                });
+                setOrders(newOrder);
+            } else if (!existingItem) {
+                // If order does not contain that item id in each object's itemId
+                const newOrder = [...orders, {
+                    itemId: id,
                     quantity: 1,
-                    name: itemDetails.name,
-                    price: itemDetails.price,
-                    desc: itemDetails.desc,
-                },
-            ]);
+                }];
+                setOrders(newOrder);
+            }
+            // setOrders([...orders, { ...menuItem }]);
         }
     };
 
-    // Function to remove an order item
+    // REMOVE ORDER ITEMS 
     const removeOrderItem = (id) => {
-        setOrders((prevOrders) => {
-            // Find the index of the order to be removed
-            const orderIndex = prevOrders.findIndex((order) => order.id === id);
-
-            if (orderIndex !== -1) {
-                // If quantity is more than one, decrease quantity
-                if (prevOrders[orderIndex].quantity > 1) {
-                    const updatedOrders = [...prevOrders];
-                    updatedOrders[orderIndex].quantity -= 1;
-                    return updatedOrders;
+        const orderItem = orders.find(item => item.itemId === id);
+        if (orderItem) {
+            const newOrder = orders.map((item) => {
+                if (item.itemId === id) {
+                    if (item.quantity > 1) {
+                        return {
+                            ...item,
+                            quantity: item.quantity - 1,
+                        };
+                    } else {
+                        // Don't include the item in the new array when quantity is 1
+                        return null;
+                    }
                 } else {
-                    // If quantity is one, remove the order
-                    return prevOrders.filter((order) => order.orderId !== id);
+                    return item;
                 }
-            } else {
-                console.log("Order not found");
-                return prevOrders;
-            }
-        });
+            });
+            // Filter out null values (items with quantity 1) from the new array
+            const filteredOrder = newOrder.filter(item => item !== null);
+            setOrders(filteredOrder);
+        }
     };
 
 
@@ -96,6 +94,11 @@ export function DataProvider({ children }) {
         }
     }
 
+    // useEffect(() => {
+    //     console.log(orders)
+    // }, [orders])
+
+
 
     const contextValues = {
         menu,
@@ -104,6 +107,7 @@ export function DataProvider({ children }) {
         menuCategories,
         setItemsByCatName,
         orders,
+        getItemById,
         addOrderItem,
         removeOrderItem,
     }
