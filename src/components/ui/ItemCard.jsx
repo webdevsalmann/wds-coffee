@@ -26,7 +26,7 @@ export default function ItemCard({ item, toggle }) {
 
             <div className="w-full sm:w-3/4 max-w-[2/5] flex-1 flex flex-col gap-2 sm:gap-4">
                 <div className="sm:flex-1 flex-1">
-                    <div className="text-sm sm:text-base font-bold">{item.name}</div>
+                    <div className="text-sm sm:text-base font-semibold">{item.name}</div>
                     <p className="text-sm hidden sm:block">{item.desc}</p>
                     <div className="font-bold clr-p">${item.price}</div>
                 </div>

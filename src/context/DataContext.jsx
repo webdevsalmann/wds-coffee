@@ -24,7 +24,6 @@ export function DataProvider({ children }) {
         return null;
     };
 
-
     // ADD ORDER ITEM
     const addOrderItem = (id) => {
         const menuItem = getItemById(id);
@@ -82,8 +81,6 @@ export function DataProvider({ children }) {
         }
     };
 
-
-
     // SET ITEM BY CATEGORY NAME
     const setItemsByCatName = (catName) => {
         if (menu.hasOwnProperty(catName)) {
@@ -93,12 +90,6 @@ export function DataProvider({ children }) {
             console.error(`Invalid category name: ${catName}`);
         }
     }
-
-    // useEffect(() => {
-    //     console.log(orders)
-    // }, [orders])
-
-
 
     const contextValues = {
         menu,

@@ -65,19 +65,13 @@ export default function Hero() {
     return (
         <>
             <section className={`relative section-padding min-h-[calc(100vh_-_10rem)]`}>
-                {/* <div className="absolute inset-0 bg-[url('/images/hero/1.jpg')] bg-cover brightness-75 z-0"></div> */}
                 <div className="absolute inset-0 bg-[url('/images/hero/1.jpg')] bg-cover brightness-75 z-0">
                     <BannerSlider images={images} />
                 </div>
 
                 <div className="absolute bottom-32 left-0 right-0 mx-auto w-full  flex-center flex-wrap gap-4 z-10">
-                    <Link href="/reservation" className="btn-p">Book A Reservation</Link>
-                    <Link href="/menu" className="btn-solid">View Menu</Link>
+                    <Link href="/menu" className="btn-p">View Menu</Link>
                 </div>
-
-                {/* <a href="#about">
-                    <div className="absolute left-0 bottom-0 w-full set-bg-dark py-6"><div className="w-full text-center animate-bounce text-neutral-50 hover:text-red-500 font-bold">&#x21d3; View More &#x21d3;</div></div>
-                </a> */}
             </section>
         </>
     )
