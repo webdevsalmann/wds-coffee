@@ -18,7 +18,7 @@ export default function CheckoutDetails() {
     // API MESSAGES
     const botToken = '6756282629:AAF37Y6_3DZg2MzkPg6-CceUza3tGFyYktM';
     const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    const chatId = '1702531896'; // This can be a user ID, group ID, or channel ID
+    const chatId = '@wds_coffee_broadcast';
     const message = `Table No: ${fTableNo}\n\nOrdered:\n${orders.map(order => `${order.itemId} = ${order.quantity}`).join('\n')}\n\nTotal Amount: $${total}`;
 
     const params = { chat_id: chatId, text: message, };
@@ -26,17 +26,14 @@ export default function CheckoutDetails() {
     // Handle Sending Message to Telegram Channel
     const sendMessage = async () => {
         const tableNoConditions = fTableNo.trim() === "";
-        console.log(tableNoConditions)
         if (tableNoConditions) {
             return toast.error("Please Enter Table Number")
         } else {
             try {
                 const response = await axios.post(apiUrl, params);
-                console.log('Message sent successfully:', response.data);
+                toast.success("Your Order has been placed successfully")
             } catch (error) {
                 console.error('Error sending message:', error);
-            } finally {
-                toast.success("Your Order has been placed successfully")
             }
         }
     }
@@ -52,7 +49,7 @@ export default function CheckoutDetails() {
             <div className="mt-4">
                 <label className="flex items-center gap-2" htmlFor="fTableNo">
                     <span>Table No: </span>
-                    <input className="set-bg-light max-w-[5rem]" type="text" name="fTableNo" value={fTableNo} onChange={handleOnChange} placeholder="No"/>
+                    <input className="set-bg-light max-w-[5rem]" type="text" name="fTableNo" value={fTableNo} onChange={handleOnChange} placeholder="No" />
                 </label>
             </div>
 
